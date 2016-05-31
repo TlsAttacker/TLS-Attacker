@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>anonymous.tlsattacker</groupId>
+    <artifactId>TLS-Attacker</artifactId>
+    <version>1.1</version>
+    <packaging>pom</packaging>
+    <inceptionYear>2015</inceptionYear>
+    <name>TLS-Attacker</name>
+    <description>TLS-Attacker is a Java-based framework for analyzing TLS libraries. It is developed by the anonymous (http://anonymous.de/) and the anonymous GmbH (http://anonymous.de/). </description>
+    
+    <developers>
+        <developer>
+            <id>anonymous</id>
+            <name>anonymous anonymous</name>
+            <email>anonymous.anonymous@anonymous</email>
+            <url>http://www.anonymous.de/</url>
+            <organization>anonymous</organization>
+            <organizationUrl>http://www.anonymous.de</organizationUrl>
+            <roles>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
+     
+    <repositories>
+        <repository>
+            <id>libs</id>
+            <url>https://repo.nds.rub.de/repository/libs/</url>
+        </repository>
+    </repositories>
+    
+    <modules>
+        <module>Utils</module>
+        <module>ModifiableVariable</module>
+        <module>Transport</module>
+        <module>EAP</module>
+        <module>TLS-Server</module>
+        <module>TLS</module>
+        <module>Attacks</module>
+        <module>Fuzzer</module>
+        <module>TestSuite</module>
+        <module>Runnable</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+            <artifactId>maven-java-formatter-plugin</artifactId>
+            <version>0.4</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.beust</groupId>
+            <artifactId>jcommander</artifactId>
+            <version>1.35</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.jmockit</groupId>
+            <artifactId>jmockit</artifactId>
+            <version>1.7</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.54</version>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.19.1</version>
+                </plugin>
+                <!-- Specify Java Version -->
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.5.1</version>
+                    <configuration>
+                        <source>1.7</source>
+                        <target>1.7</target>
+                        <debug>true</debug>
+                    </configuration>
+                </plugin>
+                <!-- Format the Code -->
+                <plugin>
+                    <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+                    <artifactId>maven-java-formatter-plugin</artifactId>
+                    <version>0.4</version>
+                    <configuration>
+                        <configFile>${main.basedir}/maven-eclipse-codestyle.xml</configFile>
+                        <lineEnding>LF</lineEnding>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>format</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Use a Licence Header -->
+                <plugin>
+                    <groupId>com.mycila</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <version>2.11</version>
+                    <configuration>
+                        <header>${main.basedir}/license_header_plain.txt</header>
+                        <strictCheck>true</strictCheck>
+                        <includes>
+                            <include>src/**/*.java</include>
+                        </includes>
+                        <properties>
+                            <year>${project.inceptionYear}</year>
+                            <owner>anonymous, anonymous</owner>
+                        </properties>
+                    </configuration>
+
+                    <executions>
+                        <execution>
+                            <phase>format</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin> 
+                <plugin>
+                    <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+                    <artifactId>maven-java-formatter-plugin</artifactId>
+                    <configuration>
+                        <configFile>${main.basedir}/maven-eclipse-codestyle.xml</configFile>
+                        <lineEnding>LF</lineEnding>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>2.7</version>
+                </plugin>
+            </plugins>
+        </pluginManagement> 
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>3.0.3</version>
+                <configuration>
+                    <effort>Max</effort>
+                    <threshold>Low</threshold>
+                    <xmlOutput>true</xmlOutput>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <configLocation>${main.basedir}/checkstyle.xml</configLocation>
+                </configuration>
+            </plugin>
+                  
+        </plugins>
+    </reporting>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <licenseOwner>anonymous, anonymous</licenseOwner>
+        <main.basedir>${project.basedir}</main.basedir>
+    </properties>
+</project>
